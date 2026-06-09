@@ -1,131 +1,86 @@
-# video-game-sales-analysis with MySQL
+# Video Game Sales Analysis — SQL Analysis
 
-## Overview
-
-This project explores and analyzes video game sales data using MySQL.  
-The goal is to answer business and market-related questions through SQL queries and exploratory data analysis techniques.
-
-The dataset contains information about:
-- Video game titles
-- Platforms
-- Genres
-- Publishers
-- Release years
-- Regional sales
-- Global sales
+Analysis of global video game sales across platforms, genres, publishers, and regions from 1982 to 2015, using a publicly available dataset sourced from [Kaggle](https://www.kaggle.com/datasets/gregorut/videogamesales).
 
 ---
 
 ## Dataset
 
-Dataset used: `vgsales.csv`
-
-The dataset includes sales information from multiple regions:
-- North America (NA)
-- Europe (EU)
-- Japan (JP)
-- Other regions
-- Global sales totals
-
----
-
-## Objectives
-
-This project aims to:
-- Practice SQL querying and data analysis
-- Explore regional sales trends
-- Identify top-performing games and genres
-- Detect sales outliers using statistical methods
-- Analyze publisher and platform performance
+| Property | Detail |
+|---|---|
+| Source | Kaggle — Video Game Sales |
+| File | `vgsales.csv` |
+| Period | 1982 – 2015 |
+| Records | 16,000+ video game titles |
+| Regions | North America, Europe, Japan, Other, Global |
+| Columns | Title, Platform, Genre, Publisher, Release Year, Regional Sales, Global Sales |
+| Unit | Millions of units sold |
 
 ---
 
-## SQL Concepts Used
+## Files
 
-The project demonstrates the use of:
+| File | Description |
+|---|---|
+| `01_database_setup.sql` | Database creation, column type fix for `Year`, data range validation |
+| `02_basic_sales_analysis.sql` | Top games in North America, average and standard deviation of sales by genre |
+| `03_outlier_analysis.sql` | High-end and low-end outlier detection using the 2-standard-deviation method |
+| `04_regional_analysis.sql` | Genre sales comparison across North America, Europe, Japan, and other regions |
+| `05_best_sellers.sql` | Best-selling games and genres per region, using subqueries and CTEs |
+| `06_data_validation_and_backup.sql` | Duplicate detection with `ROW_NUMBER()`, backup table creation |
+| `07_yearly_sales_analysis.sql` | Yearly sales trends by region and globally from 1982 to 2015 |
+| `08_top_games_analysis.sql` | Top 10 games in Europe, top 3 per year using `DENSE_RANK()` |
+| `09_publisher_analysis.sql` | Publisher activity, regional sales, global sales, and genre distribution |
+| `10_platform_analysis.sql` | Platform comparison by number of titles released and total global sales |
 
-- SELECT statements
-- Filtering with WHERE
-- ORDER BY
-- GROUP BY
-- Aggregate functions
-  - AVG()
-  - SUM()
-  - MAX()
-  - STDDEV()
-- Common Table Expressions (CTEs)
-- Joins
-- Aliases
-- Statistical analysis
-- Data exploration techniques
+> Files are numbered in recommended execution order. `06_data_validation_and_backup.sql` creates the `vgsalesbackup` table used in files 07–09.
 
 ---
 
-## Example Business Questions
+## Analytical Questions
 
-Some of the questions explored in this project include:
-
-- Which games had the highest global sales?
-- Which genres perform best in North America?
-- Are there significant regional differences in game preferences?
-- Which games are statistical outliers in sales?
-- Which publishers dominate the market?
-- How do average sales differ across genres and platforms?
+| # | Question | Techniques |
+|---|---|---|
+| 1 | Which games generated the highest sales in North America? | `ORDER BY`, `LIMIT` |
+| 2 | Which genres have the highest average sales, and how much variance is there? | `AVG()`, `STDDEV()` |
+| 3 | Which games are statistical outliers within their genre? | `STDDEV()`, CTE, self-join |
+| 4 | How do genre preferences differ across regions? | `SUM()`, `GROUP BY`, multi-column aggregation |
+| 5 | What is the best-selling game and genre in each region? | Subquery, CTE chaining, `UNION ALL` |
+| 6 | Are there duplicate records in the dataset? | `ROW_NUMBER()`, `PARTITION BY` |
+| 7 | How did global and regional sales trend year over year? | `GROUP BY`, `YEAR()`, aggregation |
+| 8 | What are the top 3 best-selling games in Europe for every year? | `DENSE_RANK()`, window functions |
+| 9 | Which publishers released the most games and generated the most revenue? | `COUNT()`, `SUM()`, `GROUP BY` |
+| 10 | Which platforms had the most releases and the highest global sales? | `COUNT()`, `SUM()`, comparative aggregation |
 
 ---
 
-## Example Query
+## SQL Techniques Used
 
-```sql
-SELECT
-    Genre,
-    ROUND(AVG(NA_Sales), 3) AS average_sales_na
-FROM vgsales
-GROUP BY Genre
-ORDER BY average_sales_na DESC;
-```
+- Window functions: `DENSE_RANK()`, `ROW_NUMBER()` with `PARTITION BY`
+- Multi-step CTEs and CTE chaining
+- Outlier detection using `STDDEV()` with a 2-standard-deviation threshold
+- Self-joins for genre-level statistical comparisons
+- Subqueries vs. CTEs — both approaches implemented and compared
+- `UNION ALL` for combining ranked results across regions
+- Aggregate functions: `AVG()`, `SUM()`, `MAX()`, `COUNT()`, `STDDEV()`
+- Date handling with `YEAR()` on a `DATE` column
+- Backup table creation and duplicate detection workflow
 
 ---
 
 ## Key Findings
 
-- Action and Sports games generated strong global sales overall.
-- North America and Europe showed similar market preferences.
-- Japan displayed distinct genre preferences compared to Western markets.
-- A small number of blockbuster titles act as strong sales outliers.
+- Wii Sports is the best-selling game in both North America and Europe
+- Pokemon Red/Blue is the best-selling game in Japan with 10.22M units
+- North America and Europe show similar genre preferences; Japan is noticeably different
+- The Shooter genre leads total sales in NA and EU; Role-Playing leads in Japan
+- Despite having fewer titles than Xbox 360 and PS3, the Wii generated significantly higher global sales
+- A small number of blockbuster titles act as strong outliers within their genres
 
 ---
 
-## Project Structure
+## Tools
 
-```text
-video-game-sales-analysis/
-│
-├── README.md
-├── dataset/
-│   └── vgsales.csv
-├── sql/
-│   ├── 01_database_setup.sql
-│   ├── 02_basic_sales_analysis.sql
-│   ├── 03_outlier_analysis.sql
-│   ├── 04_regional_analysis.sql
-│   ├── 05_best_sellers.sql
-│   ├── 06_data_validation_and_backup.sql
-│   ├── 07_yearly_sales_analysis.sql
-│   ├── 08_top_games_analysis.sql
-│   ├── 09_publisher_analysis.sql
-│   └── 10_platform_analysis.sql
-
-## Tools Used
-
-- MySQL
+- MySQL 8.0
 - MySQL Workbench
 - GitHub
-
----
-
----
-
-## Author
-
-SQL data analysis project focused on video game sales trends, regional market analysis, and statistical insights.
