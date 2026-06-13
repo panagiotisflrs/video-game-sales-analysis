@@ -8,7 +8,7 @@ Analysis of global video game sales across platforms, genres, publishers, and re
 
 | Property | Detail |
 |---|---|
-| Source | Kaggle — Video Game Sales |
+| Source | [Kaggle — Video Game Sales](https://www.kaggle.com/datasets/gregorut/videogamesales) |
 | File | `vgsales.csv` |
 | Period | 1982 – 2015 |
 | Records | 16,000+ video game titles |
