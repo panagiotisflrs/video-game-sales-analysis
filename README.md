@@ -84,3 +84,10 @@ Analysis of global video game sales across platforms, genres, publishers, and re
 - MySQL 8.0
 - MySQL Workbench
 - GitHub
+
+---
+
+## Related Project
+
+SQL analysis of the same dataset:
+[vgsales-PowerBI](https://github.com/panagiotisflrs/video-game-sales-PowerBi.git)
